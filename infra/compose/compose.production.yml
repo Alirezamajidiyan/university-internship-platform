@@ -1,0 +1,24 @@
+services:
+  api:
+    image: ghcr.io/${GHCR_NAMESPACE:?set GHCR_NAMESPACE}/university-internship-platform-api:${IMAGE_TAG:-main}
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    networks:
+      - app
+    # Add healthcheck after the API framework and health endpoint are selected.
+
+  pwa:
+    image: ghcr.io/${GHCR_NAMESPACE:?set GHCR_NAMESPACE}/university-internship-platform-pwa:${IMAGE_TAG:-main}
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    depends_on:
+      - api
+    networks:
+      - app
+    # Expose through a reverse proxy; configure the domain and TLS separately.
+
+networks:
+  app:
+    driver: bridge

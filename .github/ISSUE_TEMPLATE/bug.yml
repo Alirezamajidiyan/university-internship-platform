@@ -1,0 +1,44 @@
+name: گزارش باگ
+description: گزارش رفتار نادرست در محصول
+title: "fix: "
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: بخش متأثر
+      options:
+        - Intern PWA
+        - Supervisor
+        - Faculty Admin
+        - Global Admin
+        - Task Workflow
+        - Hours Tracking
+        - Notifications
+        - API
+        - Deployment
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: مراحل بازتولید
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: نتیجه مورد انتظار
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: نتیجه فعلی
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: محیط و نسخه
+      description: مرورگر، دستگاه، نسخه یا Commit؛ بدون اطلاعات شخصی یا محرمانه

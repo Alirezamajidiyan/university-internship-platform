@@ -1,0 +1,56 @@
+name: Validate repository
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate scaffold and documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check required files
+        shell: bash
+        run: |
+          set -euo pipefail
+          required=(
+            README.md
+            CONTRIBUTING.md
+            SECURITY.md
+            .gitignore
+            .env.example
+            docs/product/product-blueprint.md
+            docs/product/roles-and-permissions.md
+            docs/product/task-lifecycle.md
+            docs/product/hours-tracking.md
+            docs/data/domain-model.md
+            docs/operations/deployment.md
+            infra/compose/compose.production.yml
+          )
+          for file in "${required[@]}"; do
+            test -f "$file" || { echo "Missing required file: $file"; exit 1; }
+          done
+
+      - name: Check retired role and scope consistency
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -nE '^\|[[:space:]]*Leader[[:space:]]*\|' README.md docs/product/roles-and-permissions.md; then
+            echo "Leader must not be defined as an active product role."
+            exit 1
+          fi
+
+      - name: Check app layout
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d apps/api
+          test -d apps/pwa
+          test ! -d apps/intern-mobile

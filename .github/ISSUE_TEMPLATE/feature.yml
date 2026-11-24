@@ -1,0 +1,44 @@
+name: پیشنهاد قابلیت
+description: پیشنهاد قابلیت یا بهبود محصول
+title: "feat: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: مسئله
+      description: چه مسئله واقعی برای کارآموز، سرپرست یا ادمین حل می‌شود؟
+      placeholder: شرح مسئله
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: بخش محصول
+      options:
+        - Intern PWA
+        - Supervisor
+        - Faculty Admin
+        - Global Admin
+        - Task Workflow
+        - Hours Tracking
+        - Locations
+        - Notifications
+        - Infrastructure
+        - Documentation
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: راه‌حل پیشنهادی
+      placeholder: رفتار مورد انتظار را توضیح دهید
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: معیارهای پذیرش
+      placeholder: شرایطی که نشان می‌دهد کار کامل شده است
+    validations:
+      required: true
